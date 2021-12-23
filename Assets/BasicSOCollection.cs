@@ -1,14 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class BasicSOCollection : ISpaceObjectCollection
 {
+    private IList<SpaceObject> _spaceObjects;
+
+    public BasicSOCollection()
+    {
+        _spaceObjects = new List<SpaceObject>();
+    }
+
+    public IList<SpaceObject> SpaceObjects => _spaceObjects;
+
     public ISpaceObjectIterator CreateIterator()
     {
         return new BasicSOIterator(this);
     }
 
-    public void Add(SpaceObject @object)
+    public void Add(SpaceObject spaceObject)
     {
-        throw new NotImplementedException();
+        _spaceObjects.Add(spaceObject);
     }
 }

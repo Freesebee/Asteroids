@@ -17,6 +17,7 @@ public abstract class SpaceObject : MonoBehaviour
 
     protected void Awake()
     {
+        _existingSpaceObject = new BasicSOCollection();
         _collider = gameObject.AddComponent<PolygonCollider2D>();
         _rb = gameObject.AddComponent<Rigidbody2D>();
         _rb.angularDrag = 0;
@@ -39,7 +40,6 @@ public abstract class SpaceObject : MonoBehaviour
         {
             SpaceObject obj = iterator.GetNext();
             if (obj != this) Attract(obj);
-
         }
     }
 
