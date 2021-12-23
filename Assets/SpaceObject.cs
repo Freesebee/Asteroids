@@ -13,11 +13,13 @@ public abstract class SpaceObject : MonoBehaviour
     private IMediator _mainLogic;
 
     #region GameObject Lifecycle
-    public SpaceObject() { }
-
-    protected void Awake()
+    public SpaceObject() 
     {
         _existingSpaceObject = new BasicSOCollection();
+    }
+    
+    protected void Awake()
+    {
         _collider = gameObject.AddComponent<PolygonCollider2D>();
         _rb = gameObject.AddComponent<Rigidbody2D>();
         _rb.angularDrag = 0;
