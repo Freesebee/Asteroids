@@ -21,4 +21,9 @@ public class BasicSOCollection : ISpaceObjectCollection
     {
         _spaceObjects.Add(spaceObject);
     }
+
+    public void Remove(SpaceObject spaceObject)
+    {
+        _spaceObjects.Remove(spaceObject);
+    }
 }

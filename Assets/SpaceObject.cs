@@ -33,6 +33,11 @@ public abstract class SpaceObject : MonoBehaviour
         _existingSpaceObject.Add(this);
     }
 
+    private void OnDisable()
+    {
+        _existingSpaceObject.Remove(this);
+    }
+
     protected void FixedUpdate()
     {
         Move();
