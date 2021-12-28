@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class SpaceObject : ISpaceObject
+public abstract class SpaceObject : ISpaceObject
 {
     [SerializeField] protected float _mass = 2;
     [SerializeField] protected const float _gravitationalConst = 0.067f; //TODO: Set in mediator
@@ -16,7 +16,6 @@ public class SpaceObject : ISpaceObject
 
     public GameObject GameObject => _gameObject;
 
-    #region GameObject Lifecycle
     public SpaceObject(GameObject gameObject, Vector2 position = new Vector2()) 
     {
         _gameObject = gameObject;
@@ -24,19 +23,9 @@ public class SpaceObject : ISpaceObject
         _gameObject.transform.position = position;
     }
 
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-    }
-
-    public void OnDestroy()
-    {
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-    }
-
-    public void Awake()
+    #region GameObject Lifecycle
+    
+    public virtual void Awake()
     {
         _collider = _gameObject.AddComponent<PolygonCollider2D>();
         _rb = _gameObject.AddComponent<Rigidbody2D>();
@@ -46,27 +35,14 @@ public class SpaceObject : ISpaceObject
         _rb.mass = _mass;
     }
 
-    public void Start()
-    {
-        _rb.AddForce(Vector2.right * 10, ForceMode2D.Impulse);
-    }
+    public virtual void Start() { }
 
-    public void OnEnable()
+    public virtual void Update() 
     {
-        _existingSpaceObjects.Add(this);
+        Move();
     }
-
-    public void OnDisable()
-    {
-        _existingSpaceObjects.Remove(this);
-    }
-
-    public virtual void Update()
-    {
-        
-    }
-
-    public void FixedUpdate()
+    
+    public virtual void FixedUpdate()
     {
         ISpaceObjectIterator iterator = _existingSpaceObjects.CreateIterator();
         while(iterator.HasMore)
@@ -75,7 +51,34 @@ public class SpaceObject : ISpaceObject
             if (obj != this) Attract(obj);
         }
     }
+
+    public virtual void OnEnable()
+    {
+        _existingSpaceObjects.Add(this);
+    }
+
+    public virtual void OnDisable()
+    {
+        _existingSpaceObjects.Remove(this);
+    }
+    
+    public virtual void OnCollisionEnter2D(Collision2D collision) { }
+    
+    public virtual void OnCollisionExit2D(Collision2D collision) { }
+    
+    public virtual void OnDestroy() { }
+
     #endregion
+
+    #region Template Method
+    public void Move()
+    {
+        Moving();
+    }
+
+    protected abstract void Moving();
+    #endregion
+
 
     #region Gravity Force
     private void Attract(SpaceObject objectToAttract)

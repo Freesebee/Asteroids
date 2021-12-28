@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2257ca5dba26f44b728e0fc311f8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerShip: {fileID: 4923595212688584911, guid: 3b8f33ffb0c569f4497586619d807cc2, type: 3}
+  _shipPrefab: {fileID: 4923595212688584911, guid: 3b8f33ffb0c569f4497586619d807cc2, type: 3}
 --- !u!4 &464918871
 Transform:
   m_ObjectHideFlags: 0

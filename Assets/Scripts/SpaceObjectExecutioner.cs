@@ -3,7 +3,14 @@
 public class SpaceObjectExecutioner : MonoBehaviour
 {
     public ISpaceObject SpaceObject { get; set; }
-    private void Awake() => SpaceObject.Awake();
+
+    private void Awake()
+    {
+        if (SpaceObject == null) throw new UnityException("SpaceObject is not set in executioner script");
+
+        SpaceObject.Awake();
+    }
+
     private void Start() => SpaceObject.Start();
     private void OnEnable() => SpaceObject.OnEnable();
     private void OnDisable() => SpaceObject.OnDisable();

@@ -10,18 +10,22 @@ public class MainScript : MonoBehaviour
     {
         if (_shipPrefab == null) throw new UnityException("Ship Prefab is not assigned"); 
 
-        CreateShip();
+        GameObject ship = CreateShip();
     }
 
     private GameObject CreateShip()
     {
-        var ship = Instantiate(_shipPrefab);
+        GameObject shipGameObject = Instantiate(_shipPrefab);
 
-        ship.SetActive(false); //makes assigning values before Awake() possible
-        var script = ship.AddComponent<SpaceObjectExecutioner>();
-        script.SpaceObject = new ScreenWrapping(new Ship(ship));
-        ship.SetActive(true);
-        
-        return ship;
+        shipGameObject.SetActive(false); //makes assigning values before Awake() possible
+        SpaceObjectExecutioner script = shipGameObject.AddComponent<SpaceObjectExecutioner>();
+
+        Ship ship = new Ship(shipGameObject);
+        ship.Control(Vector2.right);
+
+        script.SpaceObject = new ScreenWrapping(ship);
+        shipGameObject.SetActive(true);
+
+        return shipGameObject;
     }
 }

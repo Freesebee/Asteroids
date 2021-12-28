@@ -2,6 +2,7 @@
 
 public interface ISpaceObject
 {
+    public GameObject GameObject { get; }
     void Awake();
     void Start();
     void OnEnable();

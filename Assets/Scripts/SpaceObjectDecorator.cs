@@ -6,6 +6,8 @@ public class SpaceObjectDecorator : ISpaceObject
 
     public SpaceObject SetWrapped { set => _wrapped = value; }
 
+    public GameObject GameObject => _wrapped.GameObject;
+
     public SpaceObjectDecorator(SpaceObject spaceObject)
     {
         _wrapped = spaceObject;
