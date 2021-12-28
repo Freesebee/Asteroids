@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class SpaceObject : ISpaceObject
 {
-    [SerializeField] protected float _mass = 2;
     [SerializeField] protected const float _gravitationalConst = 0.067f; //TODO: Set in mediator
 
     protected GameObject _gameObject;
@@ -25,24 +24,21 @@ public abstract class SpaceObject : ISpaceObject
 
     #region GameObject Lifecycle
     
-    public virtual void Awake()
+    public void Awake()
     {
         _collider = _gameObject.AddComponent<PolygonCollider2D>();
         _rb = _gameObject.AddComponent<Rigidbody2D>();
-        _rb.angularDrag = 0;
-        _rb.drag = 0;
-        _rb.gravityScale = 0;
-        _rb.mass = _mass;
+
+        ConfigureProperties();
     }
 
-    public virtual void Start() { }
+    public void Start() { }
 
-    public virtual void Update() 
+    public void Update() 
     {
-        Move();
     }
     
-    public virtual void FixedUpdate()
+    public void FixedUpdate()
     {
         ISpaceObjectIterator iterator = _existingSpaceObjects.CreateIterator();
         while(iterator.HasMore)
@@ -50,23 +46,25 @@ public abstract class SpaceObject : ISpaceObject
             SpaceObject obj = iterator.GetNext();
             if (obj != this) Attract(obj);
         }
+
+        Move();
     }
 
-    public virtual void OnEnable()
+    public void OnEnable()
     {
         _existingSpaceObjects.Add(this);
     }
 
-    public virtual void OnDisable()
+    public void OnDisable()
     {
         _existingSpaceObjects.Remove(this);
     }
     
-    public virtual void OnCollisionEnter2D(Collision2D collision) { }
+    public void OnCollisionEnter2D(Collision2D collision) { }
     
-    public virtual void OnCollisionExit2D(Collision2D collision) { }
+    public void OnCollisionExit2D(Collision2D collision) { }
     
-    public virtual void OnDestroy() { }
+    public void OnDestroy() { }
 
     #endregion
 
@@ -77,6 +75,16 @@ public abstract class SpaceObject : ISpaceObject
     }
 
     protected abstract void Moving();
+
+    public void ConfigureProperties()
+    {
+        _rb.gravityScale = 0;
+
+        ConfigureRigidBody();
+    }
+
+    protected abstract void ConfigureRigidBody();
+
     #endregion
 
 
