@@ -28,7 +28,7 @@ public class SpaceObject : ISpaceObject
     {
     }
 
-    public void Destroy()
+    public void OnDestroy()
     {
     }
 
@@ -91,11 +91,6 @@ public class SpaceObject : ISpaceObject
         Vector2 force = direction.normalized * forceMagnitude;
 
         rbToAttract.AddForce(force);
-    }
-
-    public void OnDestroy()
-    {
-        throw new NotImplementedException();
     }
     #endregion
 }
