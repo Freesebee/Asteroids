@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpaceObjectDecorator : ISpaceObject
+public class SpaceObjectDecorator : SpaceObject
 {
     protected SpaceObject _wrapped;
 
@@ -8,7 +8,7 @@ public class SpaceObjectDecorator : ISpaceObject
 
     public GameObject GameObject => _wrapped.GameObject;
 
-    public SpaceObjectDecorator(SpaceObject spaceObject)
+    public SpaceObjectDecorator(SpaceObject spaceObject) : base(spaceObject.GameObject)
     {
         _wrapped = spaceObject;
     }
@@ -22,4 +22,14 @@ public class SpaceObjectDecorator : ISpaceObject
     public virtual void OnCollisionEnter2D(Collision2D collision) => _wrapped.OnCollisionEnter2D(collision);
     public virtual void OnCollisionExit2D(Collision2D collision) => _wrapped.OnCollisionExit2D(collision);
     public virtual void OnDestroy() => _wrapped.OnDestroy();
+
+    public override void Move()
+    {
+        _wrapped.Move();
+    }
+
+    public override void ConfigureRigidBody()
+    {
+        _wrapped.ConfigureRigidBody();
+    }
 }

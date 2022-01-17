@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -15,7 +13,7 @@ public abstract class SpaceObject : ISpaceObject
 
     public GameObject GameObject => _gameObject;
 
-    public SpaceObject(GameObject gameObject, Vector2 position = new Vector2()) 
+    public SpaceObject(GameObject gameObject, Vector2 position = new Vector2())
     {
         _gameObject = gameObject;
         _existingSpaceObjects = new BasicSOCollection();
@@ -23,7 +21,7 @@ public abstract class SpaceObject : ISpaceObject
     }
 
     #region GameObject Lifecycle
-    
+
     public void Awake()
     {
         _collider = _gameObject.AddComponent<PolygonCollider2D>();
@@ -34,14 +32,14 @@ public abstract class SpaceObject : ISpaceObject
 
     public void Start() { }
 
-    public void Update() 
+    public void Update()
     {
     }
-    
+
     public void FixedUpdate()
     {
         ISpaceObjectIterator iterator = _existingSpaceObjects.CreateIterator();
-        while(iterator.HasMore)
+        while (iterator.HasMore)
         {
             SpaceObject obj = iterator.GetNext();
             if (obj != this) Attract(obj);
@@ -59,22 +57,16 @@ public abstract class SpaceObject : ISpaceObject
     {
         _existingSpaceObjects.Remove(this);
     }
-    
+
     public void OnCollisionEnter2D(Collision2D collision) { }
-    
+
     public void OnCollisionExit2D(Collision2D collision) { }
-    
+
     public void OnDestroy() { }
 
     #endregion
 
-    #region Template Method
-    public void Move()
-    {
-        Moving();
-    }
-
-    protected abstract void Moving();
+    public abstract void Move();
 
     public void ConfigureProperties()
     {
@@ -83,10 +75,7 @@ public abstract class SpaceObject : ISpaceObject
         ConfigureRigidBody();
     }
 
-    protected abstract void ConfigureRigidBody();
-
-    #endregion
-
+    public abstract void ConfigureRigidBody();
 
     #region Gravity Force
     private void Attract(SpaceObject objectToAttract)
