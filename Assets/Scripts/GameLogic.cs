@@ -4,8 +4,25 @@ using UnityEngine;
 
 public class GameLogic : IMediator
 {
-    public void Notify(object sender)
+    private float _maxSpeed = 50f;
+    private Ship ship;
+    public void Notify(object sender, string action)
     {
-        throw new System.NotImplementedException();
+        if(sender == ship && action == "gotHit")
+        {
+            reactOnGettingHit();        
+        }
+        else if(sender == ship && action == "gotDestroyed")
+        {
+            reactOnDestroy();        
+        }
+    }
+    public void reactOnDestroy()
+    {
+
+    }
+    public void reactOnGettingHit()
+    {
+
     }
 }
