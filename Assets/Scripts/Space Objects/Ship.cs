@@ -3,7 +3,8 @@
 public class Ship : ConfigurableSpaceObject
 {
     private Vector2 _direction;
-    private const float _maxSpeed = 50f;
+    [SerializeField] private float _speed = 50f;
+    [SerializeField] private float _rotationSpeed = 10f;
 
     public Ship(GameObject gameObject, Vector2 position = new Vector2()) : base(gameObject, position) 
     {
@@ -16,8 +17,17 @@ public class Ship : ConfigurableSpaceObject
 
     public override void Update()
     {
-        Vector2 newPosition = _rb.position + _direction * Time.deltaTime * _maxSpeed;
-        _rb.MovePosition(newPosition);
+        //float angle = _rb.rotation + Time.deltaTime * _rotationSpeed;
+        //_rb.MoveRotation(angle);
+
+        //Vector2 newPosition = _rb.position + _direction * Time.deltaTime * _speed;
+        //_rb.MovePosition(newPosition);
+
+        _rb.AddRelativeForce(new Vector2(0, _direction.y), ForceMode2D.Impulse);
+
+        _rb.AddTorque(-_direction.x);
+
+        _direction = Vector2.zero;
     }
 
     #region Configuration
@@ -25,7 +35,7 @@ public class Ship : ConfigurableSpaceObject
     {
         _rb.mass = 10f;
         _rb.drag = 0.8f;
-        _rb.angularDrag = 1f;
+        _rb.angularDrag = 0.2f;
     }
 
     protected override void ConfigureCollider()
