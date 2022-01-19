@@ -13,6 +13,8 @@ public abstract class SpaceObject : IUnityMonoBehaviour
 
     public GameObject GameObject => _gameObject;
 
+    protected SpaceObject() { } //required for decorator
+
     public SpaceObject(GameObject gameObject, Vector2 position = new Vector2())
     {
         _gameObject = gameObject;
@@ -22,21 +24,22 @@ public abstract class SpaceObject : IUnityMonoBehaviour
 
     #region GameObject Lifecycle
 
-    public void Awake()
+    public virtual void Awake()
     {
         _collider = _gameObject.AddComponent<PolygonCollider2D>();
         _rb = _gameObject.AddComponent<Rigidbody2D>();
-
         Configure();
     }
 
-    public void Start() { }
-
-    public void Update()
+    public virtual void Start() 
     {
     }
 
-    public void FixedUpdate()
+    public virtual void Update()
+    {
+    }
+
+    public virtual void FixedUpdate()
     {
         ISpaceObjectIterator iterator = _existingSpaceObjects.CreateIterator();
         while (iterator.HasMore)
@@ -46,25 +49,25 @@ public abstract class SpaceObject : IUnityMonoBehaviour
         }
     }
 
-    public void OnEnable()
+    public virtual void OnEnable()
     {
         _existingSpaceObjects.Add(this);
     }
 
-    public void OnDisable()
+    public virtual void OnDisable()
     {
         _existingSpaceObjects.Remove(this);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision) { }
+    public virtual void OnCollisionEnter2D(Collision2D collision) { }
 
-    public void OnCollisionExit2D(Collision2D collision) { }
+    public virtual void OnCollisionExit2D(Collision2D collision) { }
 
-    public void OnDestroy() { }
+    public virtual void OnDestroy() { }
 
     #endregion
 
-    public abstract void Configure();
+    protected abstract void Configure();
 
     #region Gravity Force
     private void Attract(SpaceObject objectToAttract)
