@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public abstract class SpaceObject : ISpaceObject
+public abstract class SpaceObject : IUnityMonoBehaviour
 {
     [SerializeField] protected const float _gravitationalConst = 0.067f; //TODO: Set in mediator
 
@@ -27,7 +27,7 @@ public abstract class SpaceObject : ISpaceObject
         _collider = _gameObject.AddComponent<PolygonCollider2D>();
         _rb = _gameObject.AddComponent<Rigidbody2D>();
 
-        ConfigureProperties();
+        Configure();
     }
 
     public void Start() { }
@@ -44,8 +44,6 @@ public abstract class SpaceObject : ISpaceObject
             SpaceObject obj = iterator.GetNext();
             if (obj != this) Attract(obj);
         }
-
-        Move();
     }
 
     public void OnEnable()
@@ -66,16 +64,7 @@ public abstract class SpaceObject : ISpaceObject
 
     #endregion
 
-    public abstract void Move();
-
-    public void ConfigureProperties()
-    {
-        _rb.gravityScale = 0;
-
-        ConfigureRigidBody();
-    }
-
-    public abstract void ConfigureRigidBody();
+    public abstract void Configure();
 
     #region Gravity Force
     private void Attract(SpaceObject objectToAttract)

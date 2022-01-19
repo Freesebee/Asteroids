@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface ISpaceObject
+public interface IUnityMonoBehaviour
 {
     public GameObject GameObject { get; }
     void Awake();

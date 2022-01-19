@@ -2,7 +2,7 @@
 
 public class SpaceObjectExecutioner : MonoBehaviour
 {
-    public ISpaceObject SpaceObject { get; set; }
+    public IUnityMonoBehaviour SpaceObject { get; set; }
 
     private void Awake()
     {
