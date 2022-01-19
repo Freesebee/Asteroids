@@ -5,17 +5,14 @@ using UnityEngine;
 public class MainScript : MonoBehaviour
 {
     [SerializeField] private GameObject _shipPrefab; //assigned manually via Unity inspector
+    private InputHandler _singleton;
 
     public void Awake()
     {
         if (_shipPrefab == null) throw new UnityException("Ship Prefab is not manually assigned");
+        _singleton = gameObject.AddComponent<InputHandler>();
 
-        //TODO: Fix not setting object reference
-        //GameObject ship = CreateShip(); 
         GameObject ship = CreateShip();
-        var script = ship.AddComponent<InputHandler>();
-        (script as InputHandler).spaceshipMove.
-             AddListener((ship.GetComponent<SpaceObjectExecutioner>().SpaceObject as Ship).Control);
     }
 
     private GameObject CreateShip()
@@ -23,9 +20,13 @@ public class MainScript : MonoBehaviour
         GameObject shipGameObject = Instantiate(_shipPrefab);
 
         shipGameObject.SetActive(false); //makes assigning values before Awake() possible
-        SpaceObjectExecutioner script = shipGameObject.AddComponent<SpaceObjectExecutioner>();
 
-        script.SpaceObject = new ScreenWrapping(new Ship(shipGameObject));
+        SpaceObjectExecutioner executor = shipGameObject.AddComponent<SpaceObjectExecutioner>();
+        executor.SpaceObject = new ScreenWrapping(new Ship(shipGameObject));
+        
+        _singleton.getInstance().spaceshipMove
+            .AddListener(((executor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship).Control);
+
         shipGameObject.SetActive(true);
 
         return shipGameObject;

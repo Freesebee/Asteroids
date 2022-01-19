@@ -5,6 +5,7 @@ public class SpaceObjectDecorator : SpaceObject
     protected SpaceObject _wrapped;
 
     public SpaceObject SetWrapped { set => _wrapped = value; }
+    public SpaceObject GetWrapped => _wrapped;
 
     public new GameObject GameObject => _wrapped.GameObject;
 

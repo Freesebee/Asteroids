@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class InputHandler : MonoBehaviour
 {
-    public UnityEngine.Events.UnityEvent<Vector2> spaceshipMove;
+    public UnityEvent<Vector2> spaceshipMove = new UnityEvent<Vector2>();
     private static InputHandler instance;
-    static InputHandler getInstance()
+
+    public InputHandler getInstance()
     {
-        if(instance == null)
+        if (instance == null)
         {
-            instance = new InputHandler();
+            //instance = new InputHandler();
+            instance = this;
         }
         return instance;
     }
     private void Awake()
     {
-        spaceshipMove = new UnityEvent<Vector2>();
+        //spaceshipMove = new UnityEvent<Vector2>();
     }
 
     // Start is called before the first frame update
