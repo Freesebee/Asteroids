@@ -5,14 +5,16 @@ public class Ship : ConfigurableSpaceObject
     private Vector2 _direction;
     private const float _maxSpeed = 50f;
 
-    public Ship(GameObject gameObject, Vector2 position = new Vector2()) : base(gameObject, position) { }
+    public Ship(GameObject gameObject, Vector2 position = new Vector2()) : base(gameObject, position) 
+    {
+    }
 
     public void Control(Vector2 normalizedDirection)
     {
         _direction = normalizedDirection;
     }
 
-    public new void Update()
+    public override void Update()
     {
         Vector2 newPosition = _rb.position + _direction * Time.deltaTime * _maxSpeed;
         _rb.MovePosition(newPosition);

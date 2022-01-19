@@ -8,19 +8,19 @@ public class SpaceObjectDecorator : SpaceObject
 
     public new GameObject GameObject => _wrapped.GameObject;
 
-    public SpaceObjectDecorator(SpaceObject spaceObject) : base(spaceObject.GameObject)
+    public SpaceObjectDecorator(SpaceObject spaceObject) : base()/* : base(spaceObject.GameObject)*/
     {
         _wrapped = spaceObject;
     }
 
-    public new virtual void Awake() => _wrapped.Awake();
-    public new virtual void Start() => _wrapped.Start();
-    public new virtual void Update() => _wrapped.Update();
-    public new virtual void FixedUpdate() => _wrapped.FixedUpdate();
-    public new virtual void OnEnable() => _wrapped.OnEnable();
-    public new virtual void OnDisable() => _wrapped.OnDisable();
-    public new virtual void OnCollisionEnter2D(Collision2D collision) => _wrapped.OnCollisionEnter2D(collision);
-    public new virtual void OnCollisionExit2D(Collision2D collision) => _wrapped.OnCollisionExit2D(collision);
-    public new virtual void OnDestroy() => _wrapped.OnDestroy();
-    public override void Configure() => _wrapped.Configure();
+    public override void Awake() => _wrapped.Awake();
+    public override void Start() => _wrapped.Start();
+    public override void Update() => _wrapped.Update();
+    public override void FixedUpdate() => _wrapped.FixedUpdate();
+    public override void OnEnable() => _wrapped.OnEnable();
+    public override void OnDisable() => _wrapped.OnDisable();
+    public override void OnCollisionEnter2D(Collision2D collision) => _wrapped.OnCollisionEnter2D(collision);
+    public override void OnCollisionExit2D(Collision2D collision) => _wrapped.OnCollisionExit2D(collision);
+    public override void OnDestroy() => _wrapped.OnDestroy();
+    protected override void Configure() => (_wrapped as SpaceObjectDecorator).Configure();
 }

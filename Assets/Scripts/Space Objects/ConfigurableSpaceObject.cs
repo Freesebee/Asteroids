@@ -9,7 +9,7 @@ public abstract class ConfigurableSpaceObject : SpaceObject
     /// <summary>
     /// Template method used to configure SpaceObject properties
     /// </summary>
-    public override void Configure()
+    protected override void Configure()
     {
         _rb.gravityScale = 0;
 

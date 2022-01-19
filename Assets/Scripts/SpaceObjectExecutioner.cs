@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpaceObjectExecutioner : MonoBehaviour
+public sealed class SpaceObjectExecutioner : MonoBehaviour
 {
     public IUnityMonoBehaviour SpaceObject { get; set; }
 
