@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class InputHandler : MonoBehaviour
 {
     public UnityEvent<Vector2> spaceshipMove = new UnityEvent<Vector2>();
+    public UnityEvent spaceshipShoot = new UnityEvent();
     private static InputHandler instance;
 
     public InputHandler getInstance()
@@ -49,6 +50,7 @@ public class InputHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            spaceshipShoot.Invoke();
         }
     }
 

@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 24f;
+    [SerializeField] private float speed = 24f;
     [SerializeField] private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+
+    public void Awake()
     {
+        rb.drag = 0;
+        rb.angularDrag = 0;
+        rb.gravityScale = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Fire(Vector2 position, float rotation)
     {
-        rb.velocity = Vector2.right * speed;
-
+        gameObject.SetActive(true);
+        rb.MovePosition(position);
+        rb.SetRotation(rotation);
+        rb.AddRelativeForce(Vector2.up * speed, ForceMode2D.Impulse);
+        StartCoroutine(BulletTime());
     }
+    
+    private IEnumerator BulletTime()
+    {
+        float timer = 3f;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        
+        gameObject.SetActive(false);
+        yield return null;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(/*kolizja*/true)

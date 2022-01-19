@@ -5,6 +5,7 @@ public class Ship : ConfigurableSpaceObject
     private Vector2 _direction;
     [SerializeField] private float _speed = 50f;
     [SerializeField] private float _rotationSpeed = 10f;
+    private ObjectPool _bulletPool;
 
     public Ship(GameObject gameObject, Vector2 position = new Vector2()) : base(gameObject, position) 
     {
@@ -15,14 +16,15 @@ public class Ship : ConfigurableSpaceObject
         _direction = normalizedDirection;
     }
 
+    public void Fire()
+    {
+        var bullet = _bulletPool.GetPooledObject();
+        var script = bullet.GetComponent<Bullet>();
+        script.Fire(_rb.position, _rb.rotation);
+    }
+
     public override void Update()
     {
-        //float angle = _rb.rotation + Time.deltaTime * _rotationSpeed;
-        //_rb.MoveRotation(angle);
-
-        //Vector2 newPosition = _rb.position + _direction * Time.deltaTime * _speed;
-        //_rb.MovePosition(newPosition);
-
         _rb.AddRelativeForce(new Vector2(0, _direction.y), ForceMode2D.Impulse);
 
         _rb.AddTorque(-_direction.x);
@@ -44,6 +46,7 @@ public class Ship : ConfigurableSpaceObject
 
     protected override void ConfigureGameObject()
     {
+        _bulletPool = GameObject.GetComponent<ObjectPool>();
     }
     #endregion
 }
