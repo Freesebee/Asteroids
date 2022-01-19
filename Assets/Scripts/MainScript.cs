@@ -10,7 +10,12 @@ public class MainScript : MonoBehaviour
     {
         if (_shipPrefab == null) throw new UnityException("Ship Prefab is not manually assigned");
 
+        //TODO: Fix not setting object reference
+        //GameObject ship = CreateShip(); 
         GameObject ship = CreateShip();
+        var script = ship.AddComponent<InputHandler>();
+        (script as InputHandler).spaceshipMove.
+             AddListener((ship.GetComponent<SpaceObjectExecutioner>().SpaceObject as Ship).Control);
     }
 
     private GameObject CreateShip()
