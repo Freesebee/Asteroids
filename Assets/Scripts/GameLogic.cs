@@ -11,24 +11,32 @@ public class GameLogic : IMediator
     
     public void Notify(object sender, string action)
     {
-        if(sender == Ship && action == MediatorConsts.GotHit)
+        if(sender == Ship)
         {
-            reactOnGettingHit();        
+            if(action == MediatorConsts.GotHit)
+            {
+                reactOnShipGettingHit();        
+            }
         }
-        else if(sender == Ship && action == MediatorConsts.GotDestroyed)
+        else if(sender is Asteroid)
         {
-            reactOnDestroy();        
+            if(action == MediatorConsts.GotDestroyed)
+            {
+                reactOnDestroy(sender as SpaceObject);        
+            }
         }
     }
-    public void reactOnDestroy()
+    public void reactOnDestroy(SpaceObject spaceObject)
     {
-
+        GameObject.Destroy(spaceObject.GameObject);
     }
-    public void reactOnGettingHit()
+    public void reactOnShipGettingHit()
     {
         if (--_hp > 0)
             HPText.text = $"LIVES: {_hp}";
         else
-            reactOnDestroy();
+        {
+            Debug.LogError("GAMEOVER");
+        }
     }
 }

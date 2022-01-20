@@ -2,16 +2,16 @@
 
 public class Asteroid : ConfigurableSpaceObject
 {
+    private int _durability;
+
     public Asteroid(GameObject gameObject, IMediator gameLogic, Vector2 position = default) : base(gameObject, gameLogic, position)
     {
+        _durability = 2;
     }
 
     public override void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Bullet bullet))
-        {
-            GameObject.Destroy(GameObject);
-        }
+        if(--_durability <= 0) _gameLogic.Notify(this, MediatorConsts.GotDestroyed);
     }
 
     protected override void ConfigureCollider()
