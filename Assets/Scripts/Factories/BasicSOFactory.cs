@@ -15,7 +15,7 @@ public class BasicSOFactory : MonoBehaviour, ISpaceObjectFactory
 
         asteroidGameObject.SetActive(false); //makes assigning values before Awake() possible
         var executor = asteroidGameObject.AddComponent<SpaceObjectExecutioner>();
-        executor.SpaceObject = new Asteroid(asteroidGameObject);
+        executor.SpaceObject = new ThrowAtCenter(new Asteroid(asteroidGameObject));
         asteroidGameObject.SetActive(true);
 
         return (SpaceObject)executor.SpaceObject;

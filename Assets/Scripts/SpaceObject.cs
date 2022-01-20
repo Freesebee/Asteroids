@@ -67,7 +67,7 @@ public abstract class SpaceObject : IUnityMonoBehaviour
 
     #endregion
 
-    protected abstract void Configure();
+    protected abstract void Configure(); //Template method
 
     #region Gravity Force
     private void Attract(SpaceObject objectToAttract)
