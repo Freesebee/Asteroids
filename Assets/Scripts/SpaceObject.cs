@@ -9,17 +9,18 @@ public abstract class SpaceObject : IUnityMonoBehaviour
     protected Collider2D _collider;
     protected Rigidbody2D _rb;
     protected static ISpaceObjectCollection _existingSpaceObjects;
-    protected IMediator _mainLogic;
+    protected IMediator _gameLogic;
 
     public GameObject GameObject => _gameObject;
 
     protected SpaceObject() { } //required for decorator
 
-    public SpaceObject(GameObject gameObject, Vector2 position = new Vector2())
+    public SpaceObject(GameObject gameObject, IMediator gameLogic, Vector2 position = new Vector2())
     {
         _gameObject = gameObject;
         _existingSpaceObjects = new BasicSOCollection();
         _gameObject.transform.position = position;
+        _gameLogic = gameLogic;
     }
 
     #region GameObject Lifecycle

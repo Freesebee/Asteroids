@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLogic : IMediator
 {
-    private float _maxSpeed = 50f;
-    private Ship ship;
+    private byte _hp = 3;
+    public Ship Ship;
+    public Text HPText;
+    
     public void Notify(object sender, string action)
     {
-        if(sender == ship && action == "gotHit")
+        if(sender == Ship && action == MediatorConsts.GotHit)
         {
             reactOnGettingHit();        
         }
-        else if(sender == ship && action == "gotDestroyed")
+        else if(sender == Ship && action == MediatorConsts.GotDestroyed)
         {
             reactOnDestroy();        
         }
@@ -23,6 +26,9 @@ public class GameLogic : IMediator
     }
     public void reactOnGettingHit()
     {
-
+        if (--_hp > 0)
+            HPText.text = $"LIVES: {_hp}";
+        else
+            reactOnDestroy();
     }
 }

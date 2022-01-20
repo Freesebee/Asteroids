@@ -17,15 +17,36 @@ public class MainScript : MonoBehaviour
     {
         _singleton = gameObject.AddComponent<InputHandler>();
 
+        _gameLogic = new GameLogic();
+
         _factory = gameObject.AddComponent<BasicSOFactory>();
+        _factory.gameLogic = _gameLogic;
         (_factory as BasicSOFactory).asteroidPrefab = _smallAsteroidPrefab;
         
         _generator = gameObject.AddComponent<SpaceObjectGenerator>();
         _generator.factory = _factory;
 
-        _gameLogic = new GameLogic();
-        
-        GameObject ship = CreateShip();
+        GameObject shipGameObject = Instantiate(_shipPrefab);
+
+        shipGameObject.SetActive(false); //makes assigning values before Awake() possible
+
+        SpaceObjectExecutioner shipExecutor = shipGameObject.AddComponent<SpaceObjectExecutioner>();
+        shipExecutor.SpaceObject = new ScreenWrapping(new Ship(shipGameObject, _gameLogic));
+
+        _singleton.getInstance().spaceshipMove
+            .AddListener(((shipExecutor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship).Control);
+
+        var objectPool = shipGameObject.AddComponent<ObjectPool>();
+        objectPool.bulletPrefab = _bulletPrefab;
+
+        _singleton.getInstance().spaceshipShoot
+            .AddListener(((shipExecutor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship).Fire);
+
+        shipGameObject.SetActive(true);
+
+        (_gameLogic as GameLogic).HPText = _hpText;
+        (_gameLogic as GameLogic).Ship = ((shipExecutor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship);
+
     }
 
     private void Start()
@@ -33,28 +54,5 @@ public class MainScript : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 7);
 
         _generator.Init();
-    }
-
-    private GameObject CreateShip()
-    {
-        GameObject shipGameObject = Instantiate(_shipPrefab);
-
-        shipGameObject.SetActive(false); //makes assigning values before Awake() possible
-
-        SpaceObjectExecutioner executor = shipGameObject.AddComponent<SpaceObjectExecutioner>();
-        executor.SpaceObject = new ScreenWrapping(new Ship(shipGameObject));
-
-        _singleton.getInstance().spaceshipMove
-            .AddListener(((executor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship).Control);
-
-        var objectPool = shipGameObject.AddComponent<ObjectPool>();
-        objectPool.bulletPrefab = _bulletPrefab;
-
-        _singleton.getInstance().spaceshipShoot
-            .AddListener(((executor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship).Fire);
-
-        shipGameObject.SetActive(true);
-
-        return shipGameObject;
     }
 }

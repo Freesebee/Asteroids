@@ -3,7 +3,7 @@
 public class ThrowAtCenter : SpaceObjectDecorator
 {
     private const float _spawnRadius = 16f;
-    private float minForce = 300f, maxForce = 700f;
+    private float minForce = 100f, maxForce = 400f;
 
     public ThrowAtCenter(SpaceObject spaceObject) : base(spaceObject)
     {
@@ -23,5 +23,6 @@ public class ThrowAtCenter : SpaceObjectDecorator
         _wrapped.GameObject.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * Random.Range(minForce, maxForce), ForceMode2D.Impulse);
         _wrapped.GameObject.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 50));
 
+        base.Start();
     }
 }

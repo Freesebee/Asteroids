@@ -255,7 +255,7 @@ MonoBehaviour:
   _shipPrefab: {fileID: 4923595212688584911, guid: fb358ebbace50304abc1a173f47faa76, type: 3}
   _bulletPrefab: {fileID: 3378745517739492401, guid: 978ea83fbdbe44245bae2f9fb54a42e3, type: 3}
   _smallAsteroidPrefab: {fileID: 6825467187118326229, guid: 16e22e004ed893846b6285d1f6a0dfbf, type: 3}
-  _hpText: {fileID: 0}
+  _hpText: {fileID: 1198806539}
 --- !u!4 &464918871
 Transform:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -305.2, y: -162.42792}
+  m_AnchoredPosition: {x: -139, y: -122.43}
   m_SizeDelta: {x: 160, y: 45.1442}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198806537
@@ -510,7 +510,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -521,7 +521,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'HP: III'
+  m_Text: 'LIVES: 3'
 --- !u!222 &1198806540
 CanvasRenderer:
   m_ObjectHideFlags: 0

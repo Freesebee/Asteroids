@@ -2,7 +2,7 @@
 
 public abstract class ConfigurableSpaceObject : SpaceObject
 {
-    protected ConfigurableSpaceObject(GameObject gameObject, Vector2 position = default) : base(gameObject, position)
+    protected ConfigurableSpaceObject(GameObject gameObject, IMediator gameLogic, Vector2 position = default) : base(gameObject, gameLogic, position)
     {
     }
 

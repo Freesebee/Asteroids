@@ -3,6 +3,14 @@
 public class BasicSOFactory : MonoBehaviour, ISpaceObjectFactory
 {
     public GameObject asteroidPrefab;
+    private IMediator _gameLogic;
+
+    public BasicSOFactory(IMediator gameLogic)
+    {
+        _gameLogic = gameLogic;
+    }
+
+    public IMediator gameLogic { set => _gameLogic = value; }
 
     public SpaceObject CreateAlien()
     {
@@ -15,7 +23,7 @@ public class BasicSOFactory : MonoBehaviour, ISpaceObjectFactory
 
         asteroidGameObject.SetActive(false); //makes assigning values before Awake() possible
         var executor = asteroidGameObject.AddComponent<SpaceObjectExecutioner>();
-        executor.SpaceObject = new ThrowAtCenter(new Asteroid(asteroidGameObject));
+        executor.SpaceObject = new DestroyAtDistance(new ThrowAtCenter(new Asteroid(asteroidGameObject, _gameLogic)), 20);
         asteroidGameObject.SetActive(true);
 
         return (SpaceObject)executor.SpaceObject;
