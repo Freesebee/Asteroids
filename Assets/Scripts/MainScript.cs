@@ -7,6 +7,7 @@ public class MainScript : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab; //assigned manually via Unity inspector
     [SerializeField] private GameObject _smallAsteroidPrefab; //assigned manually via Unity inspector
     [SerializeField] private Text _hpText; //assigned manually via Unity inspector
+    [SerializeField] private Text _gameOverText; //assigned manually via Unity inspector
 
     private InputHandler _singleton;
     private ISpaceObjectFactory _factory;
@@ -46,7 +47,8 @@ public class MainScript : MonoBehaviour
 
         (_gameLogic as GameLogic).HPText = _hpText;
         (_gameLogic as GameLogic).Ship = ((shipExecutor.SpaceObject as SpaceObjectDecorator).GetWrapped as Ship);
-
+        _gameOverText.enabled = false;
+        (_gameLogic as GameLogic).GameOverText = _gameOverText;
     }
 
     private void Start()

@@ -8,6 +8,7 @@ public class GameLogic : IMediator
     private byte _hp = 3;
     public Ship Ship;
     public Text HPText;
+    public Text GameOverText;
     
     public void Notify(object sender, string action)
     {
@@ -32,11 +33,12 @@ public class GameLogic : IMediator
     }
     public void reactOnShipGettingHit()
     {
-        if (--_hp > 0)
-            HPText.text = $"LIVES: {_hp}";
-        else
+        HPText.text = $"LIVES: {--_hp}";
+        if (_hp <= 0)
         {
             Debug.LogError("GAMEOVER");
+            GameOverText.enabled = true;
+            Time.timeScale = 0;
         }
     }
 }
