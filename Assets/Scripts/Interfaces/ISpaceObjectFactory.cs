@@ -2,5 +2,5 @@
 {
     IMediator gameLogic { set; }
     SpaceObject CreateAsteroid();
-    SpaceObject CreateAlien();
+    SpaceObject CreatePlanet();
 }
